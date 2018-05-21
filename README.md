@@ -5,7 +5,7 @@ Logging into memory buffer, as fast as possible (almost). It is very fast and mu
 Motivation for the library begins with a bug which was very hard to catch. I had a distributed system with about several hundreds computers. The computers was executing a program which had a state machine. Sometimes (about ones in an hour of cluster activity) internal invariants of the state machine became broken. I could not figure out how this could happened from the source code of the program, so I needed a log of all transitions in the state machine. But the problem was - it was A LOT OF DATA. Logging to a file made the program 100 times slower and I did not really understand what to do with terabytes of logs. So I decided to log transitions into a memory buffer with several gigabytes. When state machine invariants was broken the program aborted and I could read the log from the coredump of the program. That gave me the last seconds of program life time but that was enough to catch the bug and fix it
 
 ## How to use it and basic properties
-Include memorylog.hh
+Include memorylog.hh, use cmake and build memorylog target to make a static library.
 
 Call "initialize(total_buffer_size, chunk_size)" at the start of a program, returns true if successful. "initialize" allocates a buffer of size "total_buffer_size", divide the buffer into chunks of size "chunk_size" ("total_buffer_size" must be a multiple of "chunk_size") and put the chunks into internal wait-free (almost) ring queue.
 
