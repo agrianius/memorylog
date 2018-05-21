@@ -12,3 +12,5 @@ At the end of the program you may call "finalize" to make your memory-leak detec
 To log something call "write" or "format_write", returns true if successful. The functions get a chunk from the queue and put a record into the chunk. The chunk is saved into a TLS variable for future use, so subsequent calls of the functions will use the saved chunk. When the chunk is full a thread returns the full chunk into the queue and get another chunk from the queue. The queue has no order guarantee but it has high probability to be effectively ordered. See manual for "printf" from libc to know how to work with "format_write".
 
 Call "dump" to write the whole buffer into a file, returns true if successfull. It is also possible to find log in a coredump of a program.
+
+Each record has a prefix "\\niPao2ijSahbe0F ", thus greping "^iPao2ijSahbe0F .\*" from a coredump allows you to find completely written records and you can avoid partial records or garbage.
