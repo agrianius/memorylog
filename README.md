@@ -6,6 +6,9 @@ Motivation for the library begins with a bug which was very hard to catch. I had
 
 ## How to use it and basic properties
 Call "initialize(total_buffer_size, chunk_size)" at the start of a program, returns true if successful. "initialize" allocates a buffer of size "total_buffer_size", divide the buffer into chunks of size "chunk_size" ("total_buffer_size" must be a multiple of "chunk_size") and put the chunks into internal wait-free (almost) ring queue.
+
 At the end of the program you may call "finalize" to make your memory-leak detection silent but it is not really necessary in most cases.
+
 To log something call "write" or "format_write", returns true if successful. The functions get a chunk from the queue and put a record into the chunk. The chunk is saved into a TLS variable for future use, so subsequent calls of the functions will use the saved chunk. When the chunk is full a thread returns the full chunk into the queue and get another chunk from the queue. The queue has no order guarantee but it has high probability to be effectively ordered. See manual for "printf" from libc to know how to work with "format_write".
+
 Call "dump" to write the whole buffer into a file, returns true if successfull. It is also possible to find log in a coredump of a program.
