@@ -7,7 +7,7 @@ Motivation for the library begins with a bug which was very hard to catch. I had
 ## How to use it and basic properties
 Include memorylog.hh, use cmake and build memorylog target to make a static library.
 
-Call "initialize(total_buffer_size, chunk_size)" at the start of a program, returns true if successful. "initialize" allocates a buffer of size "total_buffer_size", divide the buffer into chunks of size "chunk_size" ("total_buffer_size" must be a multiple of "chunk_size") and put the chunks into internal wait-free (almost) ring queue.
+Call "initialize(total_buffer_size, chunk_size)" at the start of a program, returns true if successful. "initialize" allocates a buffer of size "total_buffer_size", divide the buffer into chunks of size "chunk_size" ("total_buffer_size" must be a multiple of "chunk_size") and put the chunks into internal lock-free ring queue (it's wait-free for most cases and lock-free under heavy load which is unlikely to occure).
 
 At the end of the program you may call "finalize" to make your memory-leak detection silent but it is not really necessary in most cases.
 
